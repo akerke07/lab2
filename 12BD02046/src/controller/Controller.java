@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,8 +11,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
+import java.util.Date;
 import java.util.StringTokenizer;
 import java.util.Vector;
+
+
+import model.User;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -37,14 +42,23 @@ public class Controller {
 
 
 			String template=readFile("template.html");
-			if(!path.equals("/") ) {
-				path=path.substring(1);
-				String sub=readFile(path);
-				response=template.replace("%content%", sub);
-			}else if(path.equals("/")){
-				String sub=readFile("file.html");
-				response = template.replace("%content%", sub);
+			if(path.equals("/reg")){
+				String page=readFile("registration.html");
+				Vector<String> regData = new Vector<>();
+				regData=readInput(t);
+				page=readFile("confreg.html");
+				response = template.replace("%content%", page);
+
 			}
+			
+			else if(!path.equals("/") ) {
+				path=path.substring(1);
+				String page=readFile(path);
+				response=template.replace("%content%", page);
+			}else if(path.equals("/")){
+				String page=readFile("file.html");
+				response = template.replace("%content%", page);
+			} 
 
 			t.sendResponseHeaders(200, response.length());
 			OutputStream os = t.getResponseBody();
@@ -54,24 +68,45 @@ public class Controller {
 		public static Vector<String> readInput(HttpExchange t) throws IOException {
 			URI url=t.getRequestURI();
 
-			String response = "";
+			//String response = "";
 			String path = url.toString();
-			if(path.equals("/reg")){
-				InputStream is = t.getRequestBody();
-				BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
-				Vector<String> data = new Vector<>();
-				String l; 
-				l = reader.readLine();
-				StringTokenizer st = new StringTokenizer(l, "=&");
-				while (st.hasMoreTokens()) {
-					data.add(st.nextToken());
-				}
-				return data;
+			String l; 
+			InputStream is = t.getRequestBody();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			Vector<String> data = new Vector<>();
+			l = reader.readLine();
+			StringTokenizer st = new StringTokenizer(l, "=&");
+			while (st.hasMoreTokens()) {
+				data.add(st.nextToken());
 			}
-			return null;
-
+			return data;
 		}
+
+		public static String readFromBuffer(BufferedReader br){
+			String temp = "";
+			try{
+				temp=br.readLine();
+			}
+			catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String s ="";
+			while(temp!=null){
+				s+=temp;
+				try{
+					temp=br.readLine();
+				}
+				catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			} 
+			return s;
+		}
+	
+		
 		private static String readFile(String a) throws FileNotFoundException{
 			String response="";
 			BufferedReader br = new BufferedReader(new FileReader(a));
@@ -101,29 +136,9 @@ public class Controller {
 			return response;
 		}
 	}
-	public static String readFromBuffer(BufferedReader br){
-		String temp = "";
-		try{
-			temp=br.readLine();
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String s ="";
-		while(temp!=null){
-			s+=temp;
-			try{
-				temp=br.readLine();
-			}
-			catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		} 
-		return s;
-	} 
 
 
-}
+
+} 
+
+
