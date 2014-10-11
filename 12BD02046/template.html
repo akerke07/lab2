@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+<link href='http://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Forum&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic' rel='stylesheet' type='text/css'>
+<title>ProKino</title>
+<style>
+body{
+	background: URL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtGomuggL16dhaXomHM_6I6DXmpDvC8gYNhjxuBBCi9-qyHgxOIg");
+	background-size: cover;
+	text-align: center;
+}
+.temp{
+	font-family: "Open Sans", cursive;
+	font-size: 60px;
+	color: #4169E1;
+	text-align: left;
+}
+a{
+	margin: 0px 150px 150px 0px;
+	font-size: 40px;
+	font-color:#00FFFF;
+	font-family: "Forum"; 
+}
+.signin{
+	text-align: left;
+}
+.login{
+	margin-left: 10px; 
+}
+
+</style>
+</head>
+<body>
+<h1 class="temp">ProKino</h1>
+<form method="post" action="reg" class="signin">
+	Логин:<input type="text" name="login" class="login"></br>
+	Пароль:<input type="password" name="password" class="password"></br>
+	<input type="submit" value="Войти">
+</form>
+<a href="registration.html">Регистрация</a>
+<a href="blog.html">Блог</a>
+<a href="newblog.html">Написать блог</a>
+%content%
+</body>
+</html>
