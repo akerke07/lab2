@@ -14,8 +14,14 @@ import com.sun.net.httpserver.HttpServer;
 
 
 
-public class Database implements Serializable{
-	
-	
+public class Database{
 
+	public static Vector<User> userBase = new Vector<>();
+	public static void addNewUser(Vector<String> regData){
+		String login = regData.get(1);
+		String name = regData.get(3);
+		String password = regData.get(5);
+		User newUser = new User(name,login,password);
+		userBase.add(newUser);
+	}
 }
